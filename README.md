@@ -1,20 +1,20 @@
-# Document Segmentation Dataset
+# FairScan Segmentation Dataset
 
-This repository contains a small, manually annotated dataset for training and evaluating document segmentation models. 
-It is intended as a companion to the [document-segmentation-model](https://github.com/pynicolas/document-segmentation-model) repository, 
-and is published under a restrictive license to prevent commercial reuse.
+This repository contains a small, manually annotated dataset for training and evaluating
+the [segmentation model](https://github.com/pynicolas/fairscan-segmentation-model) used by
+[FairScan](https://github.com/pynicolas/FairScan) to detect documents.
+It is published under a restrictive license to prevent commercial reuse.
 
 ## Overview
 
 - **Contents**: Images of documents (photos) and corresponding binary masks
 - **Format**: JPEG images + PNG masks (1 channel)
-- **Use case**: Semantic segmentation of documents in photos, typically as a first step in scanning workflows
 - **Annotations**: Created manually using [LabelMe](https://github.com/wkentaro/labelme)
 - **License**: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ## Structure
 
-The dataset is available via the [Releases](https://github.com/pynicolas/document-segmentation-dataset/releases) section of this repository. It is structured as follows:
+The dataset is available via the [Releases](https://github.com/pynicolas/fairscan-segmentation-dataset/releases) section of this repository. It is structured as follows:
 
 ```
 .
@@ -53,9 +53,6 @@ Under the following terms:
 
 See the full [license text here](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
 
-## Credits
-
-This dataset was manually created and curated as part of a broader effort to build ethical, privacy-respecting document scanning tools.
 
 ---
 
