@@ -15,6 +15,8 @@ YOLO_IMAGES_DIR = "images_resized/YOLODataset/images/train"
 YOLO_LABELS_DIR = "images_resized/YOLODataset/labels/train"
 YAML_TEMPLATE = "yolo-dataset-template.yaml"
 LABELME_JSON_DIR = "images_resized"
+LICENSE_FILE = "LICENSE"
+README_FILE = "README.txt"
 VAL_RATIO = 0.2
 RANDOM_SEED = 43
 
@@ -114,6 +116,9 @@ def build_semantic_segmentation_dataset(df, output_dir):
         shutil.copy2(img_src, img_dst)
         mask = draw_mask_from_json(json_src)
         mask.save(mask_dst)
+
+    shutil.copy2(LICENSE_FILE, os.path.join(output_dir, LICENSE_FILE))
+    shutil.copy2(README_FILE, os.path.join(output_dir, README_FILE))
 
     # --- Create ZIP archive ---
     zip_path = f"{output_dir}.zip"
