@@ -1,0 +1,6 @@
+/venv
+/images_raw
+/images_resized
+/fairscan-dataset
+*.csv
+*.zip
