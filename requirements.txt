@@ -1,3 +1,5 @@
 pillow
 pandas
 scikit-learn
+opencv-python
+numpy

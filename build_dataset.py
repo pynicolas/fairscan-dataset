@@ -5,6 +5,7 @@ import base64
 import shutil
 import argparse
 import pandas as pd
+import numpy as np
 from PIL import Image, ImageDraw
 from sklearn.model_selection import train_test_split
 import zipfile
@@ -95,6 +96,7 @@ def build_semantic_segmentation_dataset(df, output_dir):
     for split in ["train", "val"]:
         os.makedirs(os.path.join(output_dir, split, "images"), exist_ok=True)
         os.makedirs(os.path.join(output_dir, split, "masks"), exist_ok=True)
+        os.makedirs(os.path.join(output_dir, split, "quads"), exist_ok=True)
 
     for _, row in df.iterrows():
         img_name = row["img_name"]
@@ -117,6 +119,11 @@ def build_semantic_segmentation_dataset(df, output_dir):
         mask = draw_mask_from_json(json_src)
         mask.save(mask_dst)
 
+        quad_src = os.path.join("quads_labelme", img_name.replace(".jpg", ".json"))
+        quad_dst = os.path.join(output_dir, split, "quads", img_name.replace(".jpg", ".txt"))
+        if os.path.exists(quad_src):
+            export_quad(quad_src, quad_dst)
+
     shutil.copy2(LICENSE_FILE, os.path.join(output_dir, LICENSE_FILE))
     shutil.copy2(README_FILE, os.path.join(output_dir, README_FILE))
 
@@ -132,6 +139,17 @@ def build_semantic_segmentation_dataset(df, output_dir):
     print(f"✅ Segmentation dataset built in '{output_dir}' and zipped as '{zip_path}'")
     print(f"Train: {len(df[df.split=='train'])}, Val: {len(df[df.split=='val'])}")
 
+def export_quad(json_path, out_path):
+    with open(json_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    shape = data["shapes"][0]
+    pts = np.array(shape["points"], dtype=np.float32)
+
+    w = data["imageWidth"]
+    h = data["imageHeight"]
+    pts_norm = pts / np.array([[w, h]])
+
+    np.savetxt(out_path, pts_norm.reshape(1, -1), fmt="%.6f")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build dataset for YOLO or semantic segmentation model")

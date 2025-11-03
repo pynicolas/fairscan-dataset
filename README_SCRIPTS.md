@@ -17,25 +17,27 @@ source venv/bin/activate         # venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
-## Generate a dataset for semantic segmentation (fairscan-segmentation-model v1)
-
+## Add images
 ```bash
 python resize_images.py
-
-# Build dataset based on images.csv (the script avoids having the same doc_id in train and val)
-python build_dataset.py --segmentation semantic
-
+# After having annotated files with labelme
+python create_labelme_quads.py # initialize quads that should be checked and fixed manually with labelme
 ```
 
-## Generate a dataset for YOLO
+## Generate a dataset 
+
+Build a dataset based on `images.csv`. The script avoids having images with the same doc_id in both `train` and `val`.
+
+### For semantic segmentation
 
 ```bash
-python resize_images.py
+python build_dataset.py
+```
 
-# After having annotated files with labelme:
+### For YOLO
+
+```bash
 ~/dev/yolo/venv/bin/labelme2yolo --json_dir images_resized --output_format=polygon --val_size 0
 
-# Build dataset based on images.csv (the script avoids having the same doc_id in train and val)
 python build_dataset.py --segmentation yolo
-
 ```

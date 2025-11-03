@@ -1,6 +1,7 @@
 /venv
 /images_raw
 /images_resized
+/quads_labelme
 /fairscan-dataset
 *.csv
 *.zip
