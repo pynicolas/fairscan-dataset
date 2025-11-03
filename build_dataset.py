@@ -92,7 +92,9 @@ def draw_mask_from_json(json_path):
 
 
 def build_semantic_segmentation_dataset(df, output_dir):
-    os.makedirs(output_dir, exist_ok=True)
+    if os.path.exists(output_dir) and os.path.isdir(output_dir):
+        shutil.rmtree(output_dir)
+    os.makedirs(output_dir)
 
     for split in ["train", "val"]:
         os.makedirs(os.path.join(output_dir, split, "images"), exist_ok=True)
