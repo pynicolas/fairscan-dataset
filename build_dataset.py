@@ -12,10 +12,11 @@ import zipfile
 
 # --- CONFIG ---
 CSV_PATH = "images.csv"
-YOLO_IMAGES_DIR = "images_resized/YOLODataset/images/train"
-YOLO_LABELS_DIR = "images_resized/YOLODataset/labels/train"
+YOLO_IMAGES_DIR = "segmentation/YOLODataset/images/train"
+YOLO_LABELS_DIR = "segmentation/YOLODataset/labels/train"
 YAML_TEMPLATE = "yolo-dataset-template.yaml"
-LABELME_JSON_DIR = "images_resized"
+SEGMENTATION_INPUT_DIR = "segmentation"
+QUADS_INPUT_DIR = "quads"
 LICENSE_FILE = "LICENSE"
 README_FILE = "README.txt"
 VAL_RATIO = 0.2
@@ -102,8 +103,8 @@ def build_semantic_segmentation_dataset(df, output_dir):
         img_name = row["img_name"]
         split = row["split"]
 
-        img_src = os.path.join("images_resized", img_name)
-        json_src = os.path.join(LABELME_JSON_DIR, img_name.replace(".jpg", ".json"))
+        img_src = os.path.join(SEGMENTATION_INPUT_DIR, img_name)
+        json_src = os.path.join(SEGMENTATION_INPUT_DIR, img_name.replace(".jpg", ".json"))
 
         if not os.path.exists(img_src):
             print(f"⚠️ Missing file: {img_src}")
@@ -119,7 +120,7 @@ def build_semantic_segmentation_dataset(df, output_dir):
         mask = draw_mask_from_json(json_src)
         mask.save(mask_dst)
 
-        quad_src = os.path.join("quads_labelme", img_name.replace(".jpg", ".json"))
+        quad_src = os.path.join(QUADS_INPUT_DIR, img_name.replace(".jpg", ".json"))
         quad_dst = os.path.join(output_dir, split, "quads", img_name.replace(".jpg", ".txt"))
         if os.path.exists(quad_src):
             export_quad(quad_src, quad_dst)

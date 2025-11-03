@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image
 
 input_dir = Path("images_raw")
-output_dir = Path("images_resized")
+output_dir = Path("segmentation")
 output_dir.mkdir(exist_ok=True)
 
 max_size = 1024  # pixels

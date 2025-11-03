@@ -5,8 +5,8 @@ from pathlib import Path
 from shutil import copy2
 
 # --- Configuration ---
-SRC_DIR = Path("images_resized")
-DST_DIR = Path("quads_labelme")
+SRC_DIR = Path("segmentation")
+DST_DIR = Path("quads")
 DST_DIR.mkdir(exist_ok=True)
 
 def polygon_to_quad(points):

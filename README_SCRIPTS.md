@@ -2,12 +2,15 @@
 
 ## Directories
 - `images_raw`: raw images captured by a phone
-- `images_resized`: 
+- `segmentation`: 
   - images resized to a reasonable size (e.g. 1024×768)
-  - LabelMe JSON files containing annotations
+  - LabelMe JSON files containing annotations for segmentation (1 polygon for each document in each image)
+- `quads`
+  - images resized to a reasonable size (e.g. 1024×768)
+  - LabelMe JSON files containing annotations for quadrilaterals (1 quad for each image)
 - `image.csv`: database of all dataset images (training + validation + discarded)
 
-Data (images, CSV...) is not committed to the repository.
+Data (images, CSV...) is not committed to the git repository.
 
 ## Preparing the environment
 
@@ -17,14 +20,20 @@ source venv/bin/activate         # venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
-## Add images
+## Adding images
+Resize/copy images from `images_raw` to `segmentation`:
 ```bash
-python resize_images.py
-# After having annotated files with labelme
-python create_labelme_quads.py # initialize quads that should be checked and fixed manually with labelme
+python add_images_for_segmentation.py
 ```
+Then use Labelme to create segmentation polygons for all documents in each image of `segmentation`.
 
-## Generate a dataset 
+Then initialize quads based on segmentation (the script approximates the contour as a quadrilateral):
+```bash
+python add_images_for_quads.py
+```
+Quads should be reviewed and adjusted manually with labelme.
+
+## Generating a dataset 
 
 Build a dataset based on `images.csv`. The script avoids having images with the same doc_id in both `train` and `val`.
 
@@ -37,7 +46,7 @@ python build_dataset.py
 ### For YOLO
 
 ```bash
-~/dev/yolo/venv/bin/labelme2yolo --json_dir images_resized --output_format=polygon --val_size 0
+~/dev/yolo/venv/bin/labelme2yolo --json_dir segmentation --output_format=polygon --val_size 0
 
 python build_dataset.py --segmentation yolo
 ```
