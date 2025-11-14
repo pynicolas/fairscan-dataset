@@ -1,9 +1,8 @@
-# FairScan Segmentation Dataset
+# FairScan Dataset
 
 This repository contains a small, manually annotated dataset for training and evaluating
 the [segmentation model](https://github.com/pynicolas/fairscan-segmentation-model) used by
 [FairScan](https://github.com/pynicolas/FairScan) to detect documents.
-It is published under a restrictive license to prevent commercial reuse.
 
 ## Overview
 
@@ -14,7 +13,7 @@ It is published under a restrictive license to prevent commercial reuse.
 
 ## Structure
 
-The dataset is available via the [Releases](https://github.com/pynicolas/fairscan-segmentation-dataset/releases) section of this repository. It is structured as follows:
+The dataset is available via the [Releases](https://github.com/pynicolas/fairscan-dataset/releases) section of this repository. It is structured as follows:
 
 ```
 .
